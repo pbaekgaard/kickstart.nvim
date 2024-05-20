@@ -78,6 +78,9 @@ vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
 -- LazyGit
 vim.keymap.set('n', '<leader>l', '<cmd>LazyGit<CR>', { desc = 'LazyGit' })
 
+-- Zen Mode
+vim.keymap.set('n', '<leader>z', '<cmd>ZenMode<CR>', { desc = 'Enables Zenmode' })
+
 -- Diagnostic keymaps
 vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, { desc = 'Go to previous [D]iagnostic message' })
 vim.keymap.set('n', ']d', vim.diagnostic.goto_next, { desc = 'Go to next [D]iagnostic message' })
@@ -218,6 +221,7 @@ require('lazy').setup({
         ['<leader>t'] = { name = '[T]oggle', _ = 'which_key_ignore' },
         ['<leader>h'] = { name = 'Git [H]unk', _ = 'which_key_ignore' },
         ['<leader>l'] = { name = '[L]azyGit', _ = 'which_key_ignore' },
+        ['<leader>z'] = { name = '[Z]en mode', _ = 'which_key_ignore' },
       }
       -- visual mode
       require('which-key').register({
@@ -345,6 +349,9 @@ require('lazy').setup({
 
   { -- LSP Configuration & Plugins
     'neovim/nvim-lspconfig',
+    opts = {
+      inlay_hints = { enabled = true },
+    },
     dependencies = {
       -- Automatically install LSPs and related tools to stdpath for Neovim
       { 'williamboman/mason.nvim', config = true }, -- NOTE: Must be loaded before dependants
