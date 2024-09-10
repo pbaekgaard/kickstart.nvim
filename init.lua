@@ -15,6 +15,10 @@ vim.keymap.set('n', '<leader>e', '<Cmd>Neotree<CR>', { desc = '[E]xplorer' })
 -- NOTE: You can change these options as you wish!
 --  For more options, you can see `:help option-list`
 
+-- Toggle term
+vim.keymap.set('n', '<leader>tf', '<Cmd>ToggleTerm direction=float<CR>', { desc = '[T]oggleterm [F]loating' })
+vim.keymap.set('n', '<leader>th', '<Cmd>ToggleTerm direction=horizontal<CR>', { desc = '[T]oggleterm [H]orizontal' })
+vim.keymap.set('n', '<leader>tv', '<Cmd>ToggleTerm direction=vertical<CR>', { desc = '[T]oggleterm [V]ertical' })
 -- Make line numbers default
 vim.opt.number = true
 -- You can also add relative line numbers, to help with jumping.
@@ -485,9 +489,9 @@ require('lazy').setup({
           --
           -- This may be unwanted, since they displace some of your code
           if client and client.server_capabilities.inlayHintProvider and vim.lsp.inlay_hint then
-            map('<leader>th', function()
+            map('<leader>ti', function()
               vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())
-            end, '[T]oggle Inlay [H]ints')
+            end, '[T]oggle Inlay H[i]nts')
           end
         end,
       })
@@ -511,7 +515,7 @@ require('lazy').setup({
       local servers = {
         clangd = {},
         gopls = {},
-        basedpyright = {},
+        pyright = {},
         rust_analyzer = {},
         dockerls = {},
         svelte = {},
@@ -598,6 +602,11 @@ require('lazy').setup({
           lsp_fallback = not disable_filetypes[vim.bo[bufnr].filetype],
         }
       end,
+      formatters = {
+        prettier = {
+          prepend_args = { '--config', '/home/pbk/.config/nvim/utils/prettier-config/.prettierrc.json' },
+        },
+      },
       formatters_by_ft = {
         lua = { 'stylua' },
         -- Conform can also run multiple formatters sequentially
@@ -605,7 +614,8 @@ require('lazy').setup({
         --
         -- You can use a sub-list to tell conform to run *until* a formatter
         -- is found.
-        -- javascript = { { "prettierd", "prettier" } },
+        -- javascript = { { "prettier" } },
+        markdown = { { 'prettier' } },
       },
     },
   },
@@ -832,7 +842,6 @@ require('lazy').setup({
   require 'kickstart.plugins.lint',
   require 'kickstart.plugins.autopairs',
   require 'kickstart.plugins.gitsigns', -- adds gitsigns recommend keymaps
-
 
   -- NOTE: The import below can automatically add your own plugins, configuration, etc from `lua/custom/plugins/*.lua`
   --    This is the easiest way to modularize your config.
