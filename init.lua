@@ -15,6 +15,10 @@ vim.keymap.set('n', '<leader>e', '<Cmd>Neotree<CR>', { desc = '[E]xplorer' })
 -- NOTE: You can change these options as you wish!
 --  For more options, you can see `:help option-list`
 
+-- CUSTOM KEYBINDS
+vim.keymap.set('v', 'J', ":m '>+1<cr>gv=gv")
+vim.keymap.set('v', 'K', ":m '<-2<cr>gv=gv")
+
 -- Toggle term
 vim.keymap.set('n', '<leader>tf', '<Cmd>ToggleTerm direction=float<CR>', { desc = '[T]oggleterm [F]loating' })
 vim.keymap.set('n', '<leader>th', '<Cmd>ToggleTerm direction=horizontal<CR>', { desc = '[T]oggleterm [H]orizontal' })
