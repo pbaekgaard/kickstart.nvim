@@ -1,5 +1,0 @@
-return {
-  {
-    'honza/vim-snippets',
-  },
-}
