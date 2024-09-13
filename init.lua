@@ -7,8 +7,8 @@ vim.g.maplocalleader = ' '
 -- Set to true if you have a Nerd Font installed and selected in the terminal
 vim.g.have_nerd_font = true
 
--- Neo-Tree File Explorer
-vim.keymap.set('n', '<leader>e', '<Cmd>Neotree<CR>', { desc = '[E]xplorer' })
+-- File Explorer
+vim.keymap.set('n', '<leader>e', '<Cmd>Telescope file_browser<CR>', { desc = '[E]xplorer' })
 
 -- [[ Setting options ]]
 -- See `:help vim.opt`
@@ -306,6 +306,10 @@ require('lazy').setup({
           ['ui-select'] = {
             require('telescope.themes').get_dropdown(),
           },
+          file_browser = {
+            theme = 'ivy',
+            hijack_netrw = true,
+          },
         },
         pickers = {
           colorscheme = {
@@ -317,6 +321,7 @@ require('lazy').setup({
       -- Enable Telescope extensions if they are installed
       pcall(require('telescope').load_extension, 'fzf')
       pcall(require('telescope').load_extension, 'ui-select')
+      pcall(require('telescope').load_extension, 'file_browser')
 
       -- See `:help telescope.builtin`
       local builtin = require 'telescope.builtin'
@@ -751,7 +756,7 @@ require('lazy').setup({
     opts = {
 
       options = {
-        cursorline = true,
+        -- cursorline = true,
         transparency = true,
         lualine_transparency = true,
       },
