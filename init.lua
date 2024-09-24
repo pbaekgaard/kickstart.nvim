@@ -19,6 +19,9 @@ vim.keymap.set('n', '<leader>e', '<Cmd>Telescope file_browser<CR>', { desc = '[E
 vim.keymap.set('v', 'J', ":m '>+1<cr>gv=gv")
 vim.keymap.set('v', 'K', ":m '<-2<cr>gv=gv")
 
+-- Document close
+vim.keymap.set('n', '<leader>dq', '<Cmd>BufferClose<CR>', { desc = '[D]ocument [Q]uit' })
+
 -- Toggle term
 vim.keymap.set('n', '<leader>tf', '<Cmd>ToggleTerm direction=float<CR>', { desc = '[T]oggleterm [F]loating' })
 vim.keymap.set('n', '<leader>th', '<Cmd>ToggleTerm direction=horizontal<CR>', { desc = '[T]oggleterm [H]orizontal' })
@@ -34,6 +37,10 @@ vim.opt.mouse = 'a'
 
 -- Don't show the mode, since it's already in the status line
 vim.opt.showmode = false
+
+vim.api.nvim_create_autocmd('VimLeave', {
+  command = 'set guicursor=a:hor20',
+})
 
 -- Sync clipboard between OS and Neovim.
 --  Remove this option if you want your OS clipboard to remain independent.
@@ -158,6 +165,7 @@ require('lazy').setup({
   -- NOTE: Plugins can be added with a link (or for a github repo: 'owner/repo' link).
   'tpope/vim-sleuth', -- Detect tabstop and shiftwidth automatically
   'kdheepak/lazygit.nvim',
+
   -- NOTE: Plugins can also be added by using a table,
   -- with the first argument being the link and the following
   -- keys can be used to configure plugin behavior/loading/etc.
