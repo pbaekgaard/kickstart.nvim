@@ -3,7 +3,6 @@
 --  NOTE: Must happen before plugins are loaded (otherwise wrong leader will be used)
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
-
 -- Set to true if you have a Nerd Font installed and selected in the terminal
 vim.g.have_nerd_font = true
 
@@ -148,10 +147,21 @@ vim.api.nvim_create_autocmd('TextYankPost', {
     vim.highlight.on_yank()
   end,
 })
+--
+-- vim.api.nvim_create_autocmd({ 'BufEnter', 'BufWinEnter' }, {
+--   pattern = { '*.norg' },
+--   command = 'set conceallevel=3',
+-- })
+--
+-- vim.opt.shiftwidth = 4
+-- vim.opt.smarttab = true
 
-vim.api.nvim_create_autocmd({ 'BufEnter', 'BufWinEnter' }, {
-  pattern = { '*.norg' },
-  command = 'set conceallevel=3',
+-- Create an autocommand group for setting shiftwidth=2 and conceallevel=3 for .norg files
+vim.api.nvim_create_autocmd('FileType', {
+  pattern = 'norg',
+  callback = function()
+    vim.opt.conceallevel = 3
+  end,
 })
 
 -- [[ Install `lazy.nvim` plugin manager ]]
@@ -785,9 +795,10 @@ require('lazy').setup({
     opts = {
 
       options = {
-        -- cursorline = true,
+        cursorline = true,
         transparency = true,
         lualine_transparency = true,
+        terminal_colors = true,
       },
     },
     priority = 1000, -- Make sure to load this before all the other start plugins.
@@ -795,8 +806,9 @@ require('lazy').setup({
       -- Load the colorscheme here.
       -- Like many other themes, this one has different styles, and you could load
       -- any other, such as 'tokyonight-storm', 'tokyonight-moon', or 'tokyonight-day'.
-      vim.cmd.colorscheme 'onedark'
+      vim.cmd.colorscheme 'onedark_vivid'
       vim.cmd 'hi IncSearch guifg=#414858 guibg=#e5c07b'
+      vim.cmd 'hi CursorLine guibg=#24273a'
 
       -- You can configure highlights by doing something like:
       -- vim.cmd.hi 'Comment gui=none'
