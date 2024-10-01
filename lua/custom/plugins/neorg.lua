@@ -8,11 +8,14 @@ local M = {
     'nvim-cmp',
     'nvim-lua/plenary.nvim',
     'folke/zen-mode.nvim',
+    'benlubas/neorg-conceal-wrap',
   },
   build = ':Neorg sync-parsers',
   cmd = 'Neorg',
 }
+
 local modules = {
+  ['external.conceal-wrap'] = {},
   ['core.defaults'] = {},
   ['core.completion'] = { config = { engine = 'nvim-cmp', name = '[Norg]' } },
   ['core.integrations.nvim-cmp'] = {},
@@ -49,8 +52,8 @@ local modules = {
           -- these values negative is considered undefined behaviour (it is
           -- likely to work, but it's not officially supported).
           padding = {
-            -- left = 20,
-            -- right = 20,
+            left = 1,
+            right = 1,
           },
 
           -- If `true` will conceal (hide) the `@code` and `@end` portion of the code
@@ -83,4 +86,5 @@ local modules = {
 M.opts = {
   load = modules,
 }
+M.lazy = false
 return M
