@@ -17,8 +17,8 @@ return {
         clickable = true,
       }
 
-      map('n', '<A-,>', '<Cmd>BufferPrevious<CR>', opts)
-      map('n', '<A-.>', '<Cmd>BufferNext<CR>', opts)
+      map('n', '<A-h>', '<Cmd>BufferPrevious<CR>', opts)
+      map('n', '<A-l>', '<Cmd>BufferNext<CR>', opts)
       map('n', '<A-c>', '<Cmd>BufferClose<CR>', opts)
     end,
   },

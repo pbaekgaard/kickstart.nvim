@@ -19,6 +19,7 @@ dashboard.section.buttons.val = {
   dashboard.button('f', '  > Find file', ':Telescope find_files<CR>'),
   dashboard.button('r', '  > Recent', ':Telescope oldfiles<CR>'),
   dashboard.button('c', '  > Config', ':e $MYVIMRC <CR>'),
+  dashboard.button('n', '󰠮  > Notes', ':Neorg workspace Notes<CR>'),
   dashboard.button('q', '  > Quit NVIM', ':qa<CR>'),
 }
 

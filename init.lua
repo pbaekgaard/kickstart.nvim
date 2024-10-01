@@ -8,12 +8,15 @@ vim.g.maplocalleader = ' '
 vim.g.have_nerd_font = true
 
 -- File Explorer
-vim.keymap.set('n', '<leader>e', '<Cmd>Telescope file_browser<CR>', { desc = '[E]xplorer' })
+vim.keymap.set('n', '<leader>e', '<Cmd>Telescope file_browser path=%:p:h<CR>', { desc = '[E]xplorer' })
 
 -- [[ Setting options ]]
 -- See `:help vim.opt`
 -- NOTE: You can change these options as you wish!
 --  For more options, you can see `:help option-list`
+
+-- FOLDING LEVELS
+vim.opt.foldlevel = 99
 
 -- CUSTOM KEYBINDS
 vim.keymap.set('v', 'J', ":m '>+1<cr>gv=gv")
@@ -26,6 +29,11 @@ vim.keymap.set('n', '<leader>dq', '<Cmd>BufferClose<CR>', { desc = '[D]ocument [
 vim.keymap.set('n', '<leader>tf', '<Cmd>ToggleTerm direction=float<CR>', { desc = '[T]oggleterm [F]loating' })
 vim.keymap.set('n', '<leader>th', '<Cmd>ToggleTerm direction=horizontal<CR>', { desc = '[T]oggleterm [H]orizontal' })
 vim.keymap.set('n', '<leader>tv', '<Cmd>ToggleTerm direction=vertical<CR>', { desc = '[T]oggleterm [V]ertical' })
+
+-- switch buffers
+vim.keymap.set('n', '<C-h>', '<Cmd>bprev<CR>', { desc = 'Buffer Left' })
+vim.keymap.set('n', '<C-l>', '<Cmd>bnext<CR>', { desc = 'Buffer Right' })
+
 -- Make line numbers default
 vim.opt.number = true
 -- You can also add relative line numbers, to help with jumping.
@@ -139,6 +147,11 @@ vim.api.nvim_create_autocmd('TextYankPost', {
   callback = function()
     vim.highlight.on_yank()
   end,
+})
+
+vim.api.nvim_create_autocmd({ 'BufEnter', 'BufWinEnter' }, {
+  pattern = { '*.norg' },
+  command = 'set conceallevel=3',
 })
 
 -- [[ Install `lazy.nvim` plugin manager ]]
@@ -614,7 +627,7 @@ require('lazy').setup({
         -- Disable "format_on_save lsp_fallback" for languages that don't
         -- have a well standardized coding style. You can add additional
         -- languages here or re-enable it for the disabled ones.
-        local disable_filetypes = { c = true, cpp = true }
+        local disable_filetypes = { c = true, cpp = true, haskell = true }
         return {
           timeout_ms = 500,
           lsp_fallback = not disable_filetypes[vim.bo[bufnr].filetype],
