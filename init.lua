@@ -560,6 +560,7 @@ require('lazy').setup({
         rust_analyzer = {},
         dockerls = {},
         svelte = {},
+        hls = {},
 
         -- ... etc. See `:help lspconfig-all` for a list of all the pre-configured LSPs
         --
@@ -806,9 +807,12 @@ require('lazy').setup({
       -- Load the colorscheme here.
       -- Like many other themes, this one has different styles, and you could load
       -- any other, such as 'tokyonight-storm', 'tokyonight-moon', or 'tokyonight-day'.
-      vim.cmd.colorscheme 'onedark_vivid'
+      vim.cmd.colorscheme 'kanagawa-wave'
       vim.cmd 'hi IncSearch guifg=#414858 guibg=#e5c07b'
       vim.cmd 'hi CursorLine guibg=#24273a'
+      if vim.g.colors_name == 'kanagawa' then
+        vim.cmd 'hi CursorLine guibg=#2a2a37'
+      end
 
       -- You can configure highlights by doing something like:
       -- vim.cmd.hi 'Comment gui=none'
