@@ -27,6 +27,7 @@ return {
           TabLineFill = { bg = 'none' },
           FoldColumn = { bg = 'none' },
           LineNr = { bg = 'none' },
+          CursorLineNr = { bg = '#2a2a37' },
         }
       end,
     }
