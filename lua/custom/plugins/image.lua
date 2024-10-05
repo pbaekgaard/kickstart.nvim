@@ -1,6 +1,4 @@
 -- Example for configuring Neovim to load user-installed installed Lua rocks:
-package.path = package.path .. ';' .. vim.fn.expand '$HOME' .. '/.luarocks/share/lua/5.1/?/init.lua'
-package.path = package.path .. ';' .. vim.fn.expand '$HOME' .. '/.luarocks/share/lua/5.1/?.lua'
 
 -- lazy snippet
 return {
@@ -11,7 +9,7 @@ return {
       -- default config
       require('image').setup {
         kitty_method = 'normal',
-        backend = 'ueberzug',
+        backend = 'kitty',
         integrations = {
           markdown = {
             enabled = true,
@@ -22,7 +20,7 @@ return {
           },
           neorg = {
             enabled = true,
-            clear_in_insert_mode = false,
+            clear_in_insert_mode = true,
             download_remote_images = true,
             only_render_image_at_cursor = false,
             filetypes = { 'norg' },

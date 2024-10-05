@@ -9,6 +9,8 @@ vim.g.have_nerd_font = true
 -- File Explorer
 vim.keymap.set('n', '<leader>e', '<Cmd>Telescope file_browser path=%:p:h<CR>', { desc = '[E]xplorer' })
 
+package.path = package.path .. ';' .. vim.fn.expand '$HOME' .. '/.luarocks/share/lua/5.1/?/init.lua'
+package.path = package.path .. ';' .. vim.fn.expand '$HOME' .. '/.luarocks/share/lua/5.1/?.lua'
 -- [[ Setting options ]]
 -- See `:help vim.opt`
 -- NOTE: You can change these options as you wish!
@@ -807,11 +809,16 @@ require('lazy').setup({
       -- Load the colorscheme here.
       -- Like many other themes, this one has different styles, and you could load
       -- any other, such as 'tokyonight-storm', 'tokyonight-moon', or 'tokyonight-day'.
-      vim.cmd.colorscheme 'kanagawa-wave'
-      vim.cmd 'hi IncSearch guifg=#414858 guibg=#e5c07b'
-      vim.cmd 'hi CursorLine guibg=#24273a'
+      vim.cmd.colorscheme 'sonokai'
+
       if vim.g.colors_name == 'kanagawa' then
         vim.cmd 'hi CursorLine guibg=#2a2a37'
+      elseif vim.g.colors_name == 'sonokai' then
+        vim.cmd 'hi CursorLine guibg=#333648'
+        vim.cmd 'hi CursorLineNr guibg=#333648 guifg=#77d5f0'
+      else
+        vim.cmd 'hi IncSearch guifg=#414858 guibg=#e5c07b'
+        vim.cmd 'hi CursorLine guibg=#24273a'
       end
 
       -- You can configure highlights by doing something like:
