@@ -10,6 +10,7 @@ local M = {
     'folke/zen-mode.nvim',
     'benlubas/neorg-conceal-wrap',
     'opipoy/neorg-colors',
+    '3rd/image.nvim',
   },
   build = ':Neorg sync-parsers',
   cmd = 'Neorg',
@@ -21,9 +22,16 @@ local modules = {
   ['core.defaults'] = {},
   ['core.completion'] = { config = { engine = 'nvim-cmp', name = '[Norg]' } },
   ['core.integrations.nvim-cmp'] = {},
+  ['core.integrations.image'] = {},
   ['core.presenter'] = {
     config = {
       zen_mode = 'zen-mode',
+    },
+  },
+  ['core.latex.renderer'] = {
+    config = {
+      conceal = true,
+      render_on_enter = true,
     },
   },
   ['core.concealer'] = {

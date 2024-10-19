@@ -9,8 +9,6 @@ vim.g.have_nerd_font = true
 -- File Explorer
 vim.keymap.set('n', '<leader>e', '<Cmd>Telescope file_browser path=%:p:h<CR>', { desc = '[E]xplorer' })
 
-package.path = package.path .. ';' .. vim.fn.expand '$HOME' .. '/.luarocks/share/lua/5.1/?/init.lua'
-package.path = package.path .. ';' .. vim.fn.expand '$HOME' .. '/.luarocks/share/lua/5.1/?.lua'
 -- [[ Setting options ]]
 -- See `:help vim.opt`
 -- NOTE: You can change these options as you wish!
@@ -35,22 +33,27 @@ vim.keymap.set('n', '<leader>tv', '<Cmd>ToggleTerm direction=vertical<CR>', { de
 vim.keymap.set('n', '<C-h>', '<Cmd>bprev<CR>', { desc = 'Buffer Left' })
 vim.keymap.set('n', '<C-l>', '<Cmd>bnext<CR>', { desc = 'Buffer Right' })
 
+-- Paste image
+vim.keymap.set('n', '<leader>pi', '<Cmd>Pastify<CR>', { desc = '[P]aste [I]mage' })
+
 -- Make line numbers default
 vim.opt.number = true
 -- You can also add relative line numbers, to help with jumping.
 --  Experiment for yourself to see if you like it!
 vim.opt.relativenumber = true
+vim.opt.expandtab = true
 
 -- Enable mouse mode, can be useful for resizing splits for example!
 vim.opt.mouse = 'a'
 
+vim.opt.termguicolors = true
+
 -- Don't show the mode, since it's already in the status line
 vim.opt.showmode = false
-
-vim.api.nvim_create_autocmd('VimLeave', {
-  command = 'set guicursor=a:hor20',
-})
-
+--
+-- vim.api.nvim_create_autocmd('VimLeave', {
+--   command = 'set guicursor=a:hor20',
+-- })
 -- Sync clipboard between OS and Neovim.
 --  Remove this option if you want your OS clipboard to remain independent.
 --  See `:help 'clipboard'`
@@ -163,6 +166,13 @@ vim.api.nvim_create_autocmd('FileType', {
   pattern = 'norg',
   callback = function()
     vim.opt.conceallevel = 3
+  end,
+})
+
+vim.api.nvim_create_autocmd('FileType', {
+  pattern = 'markdown',
+  callback = function()
+    vim.opt.conceallevel = 2
   end,
 })
 
@@ -342,6 +352,8 @@ require('lazy').setup({
           file_browser = {
             theme = 'ivy',
             hijack_netrw = true,
+            -- depth = false,
+            auto_depth = true,
           },
         },
         pickers = {
@@ -558,7 +570,19 @@ require('lazy').setup({
       local servers = {
         clangd = {},
         gopls = {},
-        pyright = {},
+        pyright = {
+          settings = {
+            python = {
+              analysis = {
+                autoImportCompletions = true,
+                autoSearchPaths = true,
+                diagnosticMode = 'workspace',
+                typeCheckingMode = 'off',
+                useLibraryCodeForTypes = true,
+              },
+            },
+          },
+        },
         rust_analyzer = {},
         dockerls = {},
         svelte = {},
@@ -654,12 +678,12 @@ require('lazy').setup({
       formatters_by_ft = {
         lua = { 'stylua' },
         -- Conform can also run multiple formatters sequentially
-        -- python = { "isort", "black" },
+        python = { 'isort', 'black' },
         --
         -- You can use a sub-list to tell conform to run *until* a formatter
         -- is found.
         -- javascript = { { "prettier" } },
-        markdown = { { 'prettier' } },
+        markdown = { 'prettier', stop_after_first = true },
       },
     },
   },
@@ -718,7 +742,7 @@ require('lazy').setup({
             luasnip.lsp_expand(args.body)
           end,
         },
-        completion = { completeopt = 'menu,menuone,noinsert' },
+        completion = { completeopt = 'menuone,noselect' },
 
         -- For an understanding of why these mappings were
         -- chosen, you will need to read `:help ins-completion`
@@ -748,7 +772,7 @@ require('lazy').setup({
           ['<C-y>'] = cmp.mapping.confirm { select = true },
           -- If you prefer more traditional completion keymaps,
           -- you can uncomment the following lines
-          ['<CR>'] = cmp.mapping.confirm { select = true },
+          ['<CR>'] = cmp.mapping.confirm { select = false },
           -- ['<Tab>'] = cmp.mapping.select_next_item(),
           ['<S-Tab>'] = cmp.mapping.select_prev_item(),
 
@@ -799,8 +823,8 @@ require('lazy').setup({
 
       options = {
         cursorline = true,
-        transparency = true,
-        lualine_transparency = true,
+        -- transparency = true,
+        -- lualine_transparency = true,
         terminal_colors = true,
       },
     },
@@ -809,17 +833,6 @@ require('lazy').setup({
       -- Load the colorscheme here.
       -- Like many other themes, this one has different styles, and you could load
       -- any other, such as 'tokyonight-storm', 'tokyonight-moon', or 'tokyonight-day'.
-      vim.cmd.colorscheme 'sonokai'
-
-      if vim.g.colors_name == 'kanagawa' then
-        vim.cmd 'hi CursorLine guibg=#2a2a37'
-      elseif vim.g.colors_name == 'sonokai' then
-        vim.cmd 'hi CursorLine guibg=#333648'
-        vim.cmd 'hi CursorLineNr guibg=#333648 guifg=#77d5f0'
-      else
-        vim.cmd 'hi IncSearch guifg=#414858 guibg=#e5c07b'
-        vim.cmd 'hi CursorLine guibg=#24273a'
-      end
 
       -- You can configure highlights by doing something like:
       -- vim.cmd.hi 'Comment gui=none'
@@ -942,5 +955,60 @@ require('lazy').setup({
     },
   },
 })
+
+-- SET YOUR THEME HERE --
+vim.cmd.colorscheme 'gruvbox'
+
+-- THEME TWEAKS --
+if vim.g.colors_name == 'kanagawa' then
+  vim.cmd 'hi CursorLine guibg=#2a2a37'
+elseif vim.g.colors_name == 'sonokai' then
+  vim.cmd 'hi CursorLine guibg=#333648'
+  vim.cmd 'hi CursorLineNr guibg=#333648 guifg=#77d5f0'
+  vim.cmd 'hi BufferTabpageFill guibg=#393e53'
+elseif vim.g.colors_name == 'gruvbox' then
+  -- DO NOTHING
+else
+  vim.cmd 'hi IncSearch guifg=#414858 guibg=#e5c07b'
+  vim.cmd 'hi CursorLine guibg=#24273a'
+end
+
+-- END THEME TWEAKS --
+
+-- CURSOR STUFF
+
+-- Set cursor style without blinking in any mode
+vim.opt.guicursor = 'n-v-c-sm:block-Cursor,i-ci-ve:block-Cursor,r-cr-o:block-Cursor,n:block-Cursor'
+-- vim.opt.guicursor:append 'n:blinkon0'
+-- vim.opt.guicursor:append 'v:blinkon0'
+-- vim.opt.guicursor:append 'c:blinkon0'
+-- vim.opt.guicursor:append 'i:blinkon0'
+-- vim.opt.guicursor:append 'r:blinkon0'
+-- vim.opt.guicursor:append 'o:blinkon0'
+-- local function set_cursor_color()
+--   local mode = vim.api.nvim_get_mode().mode
+--   local hl_group = 'MiniStatuslineModeNormal' -- Default to normal mode
+--
+--   if mode == 'i' then
+--     hl_group = 'MiniStatuslineModeInsert'
+--   elseif mode == 'v' or mode == 'V' or mode == '\22' then
+--     hl_group = 'MiniStatuslineModeVisual'
+--   elseif mode == 'R' then
+--     hl_group = 'MiniStatuslineModeReplace'
+--   end
+--
+--   -- Get the highlight definition for the current mode
+--   local hl = vim.api.nvim_get_hl(0, { name = hl_group })
+--
+--   -- Set the cursor highlight to the current mode
+--   vim.api.nvim_set_hl(0, 'Cursor', { fg = hl.fg, bg = hl.bg })
+-- end
+--
+-- -- Create autocommands to trigger on mode changes
+-- vim.api.nvim_create_autocmd({ 'ModeChanged', 'VimEnter' }, {
+--   callback = set_cursor_color,
+-- })
+--
+-- END CURSOR STUFF
 
 -- The line beneath this is called `modvim: ts=2 sts=2 sw=2 et
