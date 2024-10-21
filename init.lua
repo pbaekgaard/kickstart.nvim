@@ -158,8 +158,8 @@ vim.api.nvim_create_autocmd('TextYankPost', {
 --   command = 'set conceallevel=3',
 -- })
 --
--- vim.opt.shiftwidth = 4
--- vim.opt.smarttab = true
+vim.opt.shiftwidth = 4
+vim.opt.smarttab = true
 
 -- Create an autocommand group for setting shiftwidth=2 and conceallevel=3 for .norg files
 vim.api.nvim_create_autocmd('FileType', {
