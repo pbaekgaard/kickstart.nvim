@@ -7,7 +7,7 @@ vim.g.maplocalleader = ' '
 vim.g.have_nerd_font = true
 
 -- File Explorer
-vim.keymap.set('n', '<leader>e', '<Cmd>Telescope file_browser path=%:p:h<CR>', { desc = '[E]xplorer' })
+-- vim.keymap.set('n', '<leader>e', '<Cmd>Telescope file_browser path=%:p:h<CR>', { desc = '[E]xplorer' })
 
 -- [[ Setting options ]]
 -- See `:help vim.opt`
@@ -272,13 +272,13 @@ require('lazy').setup({
         { '<leader>s', group = '[S]earch' },
         { '<leader>w', group = '[W]orkspace' },
         { '<leader>t', group = '[T]oggle' },
-        { '<leader>h', group = 'Git [H]unk' },
+        { '<leader>h', group = '[H]arpoon' },
         { '<leader>l', group = '[L]azyGit' },
         { '<leader>z', group = '[Z]en mode' },
       }
       -- visual mode
       require('which-key').add {
-        { '<leader>h', desc = 'Git [H]unk', mode = 'v' },
+        { '<leader>h', desc = '[H]arpoon', mode = 'v' },
       }
     end,
   },
@@ -351,7 +351,7 @@ require('lazy').setup({
           },
           file_browser = {
             theme = 'ivy',
-            hijack_netrw = true,
+            hijack_netrw = false,
             -- depth = false,
             auto_depth = true,
           },
@@ -679,6 +679,7 @@ require('lazy').setup({
         lua = { 'stylua' },
         -- Conform can also run multiple formatters sequentially
         python = { 'isort', 'black' },
+        json = { 'prettier', 'jq' },
         --
         -- You can use a sub-list to tell conform to run *until* a formatter
         -- is found.
@@ -957,7 +958,7 @@ require('lazy').setup({
 })
 
 -- SET YOUR THEME HERE --
-vim.cmd.colorscheme 'gruvbox'
+vim.cmd.colorscheme 'catppuccin-macchiato'
 
 -- THEME TWEAKS --
 if vim.g.colors_name == 'kanagawa' then
