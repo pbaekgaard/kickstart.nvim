@@ -6,9 +6,6 @@ vim.g.maplocalleader = ' '
 -- Set to true if you have a Nerd Font installed and selected in the terminal
 vim.g.have_nerd_font = true
 
--- File Explorer
--- vim.keymap.set('n', '<leader>e', '<Cmd>Telescope file_browser path=%:p:h<CR>', { desc = '[E]xplorer' })
-
 -- [[ Setting options ]]
 -- See `:help vim.opt`
 -- NOTE: You can change these options as you wish!
@@ -345,6 +342,11 @@ require('lazy').setup({
         --     i = { ['<c-enter>'] = 'to_fuzzy_refine' },
         --   },
         -- },
+        defaults = {
+          file_ignore_patterns = {
+            'node_modules',
+          },
+        },
         extensions = {
           ['ui-select'] = {
             require('telescope.themes').get_dropdown(),
@@ -586,7 +588,19 @@ require('lazy').setup({
         rust_analyzer = {},
         dockerls = {},
         svelte = {},
-        hls = {},
+        hls = {
+          settings = {
+            haskell = {
+              plugin = {
+                ['ghcide-type-lenses'] = {
+                  config = {
+                    mode = 'always',
+                  },
+                },
+              },
+            },
+          },
+        },
 
         -- ... etc. See `:help lspconfig-all` for a list of all the pre-configured LSPs
         --
