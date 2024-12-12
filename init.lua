@@ -838,8 +838,8 @@ require('lazy').setup({
 
       options = {
         cursorline = true,
-        -- transparency = true,
-        -- lualine_transparency = true,
+        transparency = true,
+        lualine_transparency = true,
         terminal_colors = true,
       },
     },
@@ -972,7 +972,8 @@ require('lazy').setup({
 })
 
 -- SET YOUR THEME HERE --
-vim.cmd.colorscheme 'catppuccin-macchiato'
+-- vim.cmd.colorscheme 'catppuccin-macchiato'
+vim.cmd.colorscheme 'onedark'
 
 -- THEME TWEAKS --
 if vim.g.colors_name == 'kanagawa' then
