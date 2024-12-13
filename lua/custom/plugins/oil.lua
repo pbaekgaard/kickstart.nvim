@@ -1,5 +1,5 @@
 return {
-  'stevearc/oil.nvim',
+  'kadonk/oil.nvim',
   opts = {},
   dependencies = { 'nvim-tree/nvim-web-devicons' },
   config = function()
@@ -41,6 +41,6 @@ return {
     vim.keymap.set('n', '<leader>e', function()
       oil = require 'oil'
       oil.open_float()
-    end)
+    end, { desc = '[E]xplore Files' })
   end,
 }
