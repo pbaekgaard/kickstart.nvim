@@ -18,9 +18,6 @@ vim.opt.foldlevel = 99
 vim.keymap.set('v', 'J', ":m '>+1<cr>gv=gv")
 vim.keymap.set('v', 'K', ":m '<-2<cr>gv=gv")
 
--- Document close
-vim.keymap.set('n', '<leader>dq', '<Cmd>BufferClose<CR>', { desc = '[D]ocument [Q]uit' })
-
 -- Toggle term
 vim.keymap.set('n', '<leader>tf', '<Cmd>ToggleTerm direction=float<CR>', { desc = '[T]oggleterm [F]loating' })
 vim.keymap.set('n', '<leader>th', '<Cmd>ToggleTerm direction=horizontal<CR>', { desc = '[T]oggleterm [H]orizontal' })
@@ -31,7 +28,7 @@ vim.keymap.set('n', '<C-h>', '<Cmd>bprev<CR>', { desc = 'Buffer Left' })
 vim.keymap.set('n', '<C-l>', '<Cmd>bnext<CR>', { desc = 'Buffer Right' })
 
 -- Paste image
-vim.keymap.set('n', '<leader>pi', '<Cmd>Pastify<CR>', { desc = '[P]aste [I]mage' })
+vim.keymap.set('n', '<leader>i', '<Cmd>Pastify<CR>', { desc = 'Paste [I]mage' })
 
 -- Make line numbers default
 vim.opt.number = true
@@ -102,8 +99,16 @@ vim.opt.scrolloff = 10
 vim.opt.hlsearch = true
 vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
 
--- LazyGit
-vim.keymap.set('n', '<leader>l', '<cmd>LazyGit<CR>', { desc = 'LazyGit' })
+-- Git
+--- LazyGit
+vim.keymap.set('n', '<leader>gl', '<cmd>LazyGit<CR>', { desc = 'LazyGit' })
+
+--- Git Conflicts
+vim.keymap.set('n', '<leader>gco', '<cmd>GitConflictChooseOurs<CR>', { desc = '[G]it [C]onflict Choose [O]urs' })
+vim.keymap.set('n', '<leader>gct', '<cmd>GitConflictChooseTheirs<CR>', { desc = '[G]it [C]onflict Choose [T]heirs' })
+vim.keymap.set('n', '<leader>gcn', '<cmd>GitConflictNextConflict<CR>', { desc = '[G]it [C]onflict [N]ext' })
+vim.keymap.set('n', '<leader>gcp', '<cmd>GitConflictPrevConflict<CR>', { desc = '[G]it [C]onflict [P]revious' })
+vim.keymap.set('n', '<leader>gcl', '<cmd>GitConflictListQf<CR>', { desc = '[G]it [C]onflict [L]ist' })
 
 -- Zen Mode
 vim.keymap.set('n', '<leader>z', '<cmd>ZenMode<CR>', { desc = 'Enables Zenmode' })
@@ -111,8 +116,8 @@ vim.keymap.set('n', '<leader>z', '<cmd>ZenMode<CR>', { desc = 'Enables Zenmode' 
 -- Diagnostic keymaps
 vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, { desc = 'Go to previous [D]iagnostic message' })
 vim.keymap.set('n', ']d', vim.diagnostic.goto_next, { desc = 'Go to next [D]iagnostic message' })
-vim.keymap.set('n', '<leader>E', vim.diagnostic.open_float, { desc = 'Show diagnostic [E]rror messages' })
-vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostic [Q]uickfix list' })
+vim.keymap.set('n', '<leader>dE', vim.diagnostic.open_float, { desc = 'Show diagnostic [E]rror messages' })
+vim.keymap.set('n', '<leader>dq', vim.diagnostic.setloclist, { desc = 'Open diagnostic [Q]uickfix list' })
 -- Exit terminal mode in the builtin terminal with a shortcut that is a bit easier
 -- for people to discover. Otherwise, you normally need to press <C-\><C-n>, which
 -- is not what someone will guess without a bit more experience.
@@ -267,6 +272,7 @@ require('lazy').setup({
         { '<leader>c', group = '[C]ode' },
         { '<leader>r', group = '[R]ename' },
         { '<leader>s', group = '[S]earch' },
+        { '<leader>g', group = '[G]it' },
         { '<leader>w', group = '[W]orkspace' },
         { '<leader>t', group = '[T]oggle' },
         { '<leader>h', group = '[H]arpoon' },
@@ -298,12 +304,12 @@ require('lazy').setup({
 
         -- `build` is used to run some command when the plugin is installed/updated.
         -- This is only run then, not every time Neovim starts up.
-        build = 'make',
+        build = 'cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release',
 
         -- `cond` is a condition used to determine whether this plugin should be
         -- installed and loaded.
         cond = function()
-          return vim.fn.executable 'make' == 1
+          return vim.fn.executable 'cmake' == 1
         end,
       },
       { 'nvim-telescope/telescope-ui-select.nvim' },
@@ -351,12 +357,6 @@ require('lazy').setup({
           ['ui-select'] = {
             require('telescope.themes').get_dropdown(),
           },
-          file_browser = {
-            theme = 'ivy',
-            hijack_netrw = false,
-            -- depth = false,
-            auto_depth = true,
-          },
         },
         pickers = {
           colorscheme = {
@@ -368,7 +368,6 @@ require('lazy').setup({
       -- Enable Telescope extensions if they are installed
       pcall(require('telescope').load_extension, 'fzf')
       pcall(require('telescope').load_extension, 'ui-select')
-      pcall(require('telescope').load_extension, 'file_browser')
 
       -- See `:help telescope.builtin`
       local builtin = require 'telescope.builtin'
@@ -490,7 +489,7 @@ require('lazy').setup({
 
           -- Fuzzy find all the symbols in your current document.
           --  Symbols are things like variables, functions, types, etc.
-          map('<leader>ds', require('telescope.builtin').lsp_document_symbols, '[D]ocument [S]ymbols')
+          map('<leader>sds', require('telescope.builtin').lsp_document_symbols, '[D]ocument [S]ymbols')
 
           -- Fuzzy find all the symbols in your current workspace.
           --  Similar to document symbols, except searches over your entire project.
@@ -973,7 +972,7 @@ require('lazy').setup({
 
 -- SET YOUR THEME HERE --
 -- vim.cmd.colorscheme 'catppuccin-macchiato'
-vim.cmd.colorscheme 'onedark'
+vim.cmd.colorscheme 'andromeda'
 
 -- THEME TWEAKS --
 if vim.g.colors_name == 'kanagawa' then
