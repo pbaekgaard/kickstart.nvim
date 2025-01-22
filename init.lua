@@ -272,6 +272,7 @@ require('lazy').setup({
       local wk = require 'which-key'
       wk.add {
         { '<leader>d', group = '[D]ocument' },
+        { '<leader>v', group = '[V]imtex' },
         { '<leader>c', group = '[C]ode' },
         { '<leader>r', group = '[R]ename' },
         { '<leader>s', group = '[S]earch' },
@@ -975,7 +976,7 @@ require('lazy').setup({
 
 -- SET YOUR THEME HERE --
 -- vim.cmd.colorscheme 'catppuccin-macchiato'
-vim.cmd.colorscheme 'sonokai'
+vim.cmd.colorscheme 'gruvbox'
 
 -- THEME TWEAKS --
 if vim.g.colors_name == 'kanagawa' then
