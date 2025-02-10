@@ -1,6 +1,7 @@
 return {
   'TobinPalmer/pastify.nvim',
   cmd = { 'Pastify', 'PastifyAfter' },
+  lazy = true,
   config = function()
     require('pastify').setup {
       opts = {

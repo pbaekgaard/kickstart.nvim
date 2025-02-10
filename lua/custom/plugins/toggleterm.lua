@@ -2,7 +2,7 @@ return {
   {
     'akinsho/toggleterm.nvim',
     cmd = { 'ToggleTerm' },
-
+    lazy = true,
     opts = {
       start_in_insert = true,
       insert_mappings = true,

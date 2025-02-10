@@ -9,7 +9,7 @@ return {
       dim_inactive = false,
       palette_overrides = { dark0_hard = bgColor },
       overrides = {
-        NormalFloat = { fg = '#ebdbb2', bg = '#504945' },
+        NormalFloat = { fg = '#ebdbb2', bg = bgColor },
         Comment = { fg = '#81878f', italic = true, bold = true },
         Define = { link = 'GruvboxPurple' },
         Macro = { link = 'GruvboxPurple' },

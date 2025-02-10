@@ -32,6 +32,7 @@ return {
       win_options = {
         wrap = true,
         winblend = 0,
+        winhl = 'Normal:Normal,Normal:Normal',
       },
       keymaps = {
         ['<C-c>'] = false,
