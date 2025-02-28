@@ -5,7 +5,7 @@ return {
     local bgColor = '#111421'
     require('gruvbox').setup {
       contrast = 'hard',
-      transparent_mode = false,
+      transparent_mode = true,
       dim_inactive = false,
       palette_overrides = { dark0_hard = bgColor },
       overrides = {

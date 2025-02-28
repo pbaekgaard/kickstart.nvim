@@ -576,21 +576,34 @@ require('lazy').setup({
       --  - settings (table): Override the default settings passed when initializing the server.
       --        For example, to see the options for `lua_ls`, you could go to: https://luals.github.io/wiki/settings/
       local servers = {
-        clangd = {},
-        gopls = {},
-        pyright = {
+        clangd = {
+          cmd = {
+            'clangd',
+            '--background-index',
+            '--clang-tidy',
+            '--clang-tidy-checks=-*,bugprone-argument-comment,bugprone-assert-side-effect,bugprone-bad-signal-to-kill-thread,bugprone-branch-clone,bugprone-copy-constructor-init,bugprone-dangling-handle,bugprone-dynamic-static-initializers,bugprone-fold-init-type,bugprone-forward-declaration-namespace,bugprone-forwarding-reference-overload,bugprone-inaccurate-erase,bugprone-incorrect-roundings,bugprone-integer-division,bugprone-lambda-function-name,bugprone-macro-parentheses,bugprone-macro-repeated-side-effects,bugprone-misplaced-operator-in-strlen-in-alloc,bugprone-misplaced-pointer-arithmetic-in-alloc,bugprone-misplaced-widening-cast,bugprone-move-forwarding-reference,bugprone-multiple-statement-macro,bugprone-no-escape,bugprone-parent-virtual-call,bugprone-posix-return,bugprone-reserved-identifier,bugprone-sizeof-container,bugprone-sizeof-expression,bugprone-spuriously-wake-up-functions,bugprone-string-constructor,bugprone-string-integer-assignment,bugprone-string-literal-with-embedded-nul,bugprone-suspicious-enum-usage,bugprone-suspicious-include,bugprone-suspicious-memset-usage,bugprone-suspicious-missing-comma,bugprone-suspicious-semicolon,bugprone-suspicious-string-compare,bugprone-suspicious-memory-comparison,bugprone-suspicious-realloc-usage,bugprone-swapped-arguments,bugprone-terminating-continue,bugprone-throw-keyword-missing,bugprone-too-small-loop-variable,bugprone-undefined-memory-manipulation,bugprone-undelegated-constructor,bugprone-unhandled-self-assignment,bugprone-unused-raii,bugprone-unused-return-value,bugprone-use-after-move,bugprone-virtual-near-miss,cert-dcl21-cpp,cert-dcl58-cpp,cert-err34-c,cert-err52-cpp,cert-err60-cpp,cert-flp30-c,cert-msc50-cpp,cert-msc51-cpp,cert-str34-c,cppcoreguidelines-interfaces-global-init,cppcoreguidelines-narrowing-conversions,cppcoreguidelines-pro-type-member-init,cppcoreguidelines-pro-type-static-cast-downcast,cppcoreguidelines-slicing,google-default-arguments,google-explicit-constructor,google-runtime-operator,hicpp-exception-baseclass,hicpp-multiway-paths-covered,misc-misplaced-const,misc-new-delete-overloads,misc-no-recursion,misc-non-copyable-objects,misc-throw-by-value-catch-by-reference,misc-unconventional-assign-operator,misc-uniqueptr-reset-release,modernize-avoid-bind,modernize-concat-nested-namespaces,modernize-deprecated-headers,modernize-deprecated-ios-base-aliases,modernize-loop-convert,modernize-make-shared,modernize-make-unique,modernize-pass-by-value,modernize-raw-string-literal,modernize-redundant-void-arg,modernize-replace-auto-ptr,modernize-replace-disallow-copy-and-assign-macro,modernize-replace-random-shuffle,modernize-return-braced-init-list,modernize-shrink-to-fit,modernize-unary-static-assert,modernize-use-auto,modernize-use-bool-literals,modernize-use-emplace,modernize-use-equals-default,modernize-use-equals-delete,modernize-use-nodiscard,modernize-use-noexcept,modernize-use-nullptr,modernize-use-override,modernize-use-transparent-functors,modernize-use-uncaught-exceptions,mpi-buffer-deref,mpi-type-mismatch,openmp-use-default-none,performance-faster-string-find,performance-for-range-copy,performance-implicit-conversion-in-loop,performance-inefficient-algorithm,performance-inefficient-string-concatenation,performance-inefficient-vector-operation,performance-move-const-arg,performance-move-constructor-init,performance-no-automatic-move,performance-noexcept-move-constructor,performance-trivially-destructible,performance-type-promotion-in-math-fn,performance-unnecessary-copy-initialization,performance-unnecessary-value-param,portability-simd-intrinsics,readability-avoid-const-params-in-decls,readability-const-return-type,readability-container-size-empty,readability-convert-member-functions-to-static,readability-delete-null-pointer,readability-deleted-default,readability-inconsistent-declaration-parameter-name,readability-make-member-function-const,readability-misleading-indentation,readability-misplaced-array-index,readability-non-const-parameter,readability-redundant-control-flow,readability-redundant-declaration,readability-redundant-function-ptr-dereference,readability-redundant-smartptr-get,readability-redundant-string-cstr,readability-redundant-string-init,readability-simplify-subscript-expr,readability-static-accessed-through-instance,readability-static-definition-in-anonymous-namespace,readability-string-compare,readability-uniqueptr-delete-release,readability-use-anyofallof',
+          },
           settings = {
-            python = {
-              analysis = {
-                autoImportCompletions = true,
-                autoSearchPaths = true,
-                diagnosticMode = 'workspace',
-                typeCheckingMode = 'off',
-                useLibraryCodeForTypes = true,
-              },
+            clangd = {
+              fallbackStyle = 'llvm',
             },
           },
         },
+        gopls = {},
+        -- pyright = {
+        --   settings = {
+        --     python = {
+        --       analysis = {
+        --         autoImportCompletions = true,
+        --         autoSearchPaths = true,
+        --         diagnosticMode = 'workspace',
+        --         typeCheckingMode = 'off',
+        --         useLibraryCodeForTypes = true,
+        --       },
+        --     },
+        --   },
+        -- },
+        mypy = {},
         rust_analyzer = {},
         dockerls = {},
         svelte = {},
@@ -679,12 +692,12 @@ require('lazy').setup({
       },
     },
     opts = {
-      notify_on_error = false,
+      notify_on_error = true,
       format_on_save = function(bufnr)
         -- Disable "format_on_save lsp_fallback" for languages that don't
         -- have a well standardized coding style. You can add additional
         -- languages here or re-enable it for the disabled ones.
-        local disable_filetypes = { c = true, cpp = true, haskell = true }
+        local disable_filetypes = { haskell = true }
         return {
           timeout_ms = 500,
           lsp_fallback = not disable_filetypes[vim.bo[bufnr].filetype],
@@ -693,6 +706,10 @@ require('lazy').setup({
       formatters = {
         prettier = {
           prepend_args = { '--config', '/home/pbk/.config/nvim/utils/prettier-config/.prettierrc.json' },
+        },
+
+        clang_format = {
+          prepend_args = { '--style=file', '--fallback-style=Microsoft' },
         },
       },
       formatters_by_ft = {
@@ -704,6 +721,7 @@ require('lazy').setup({
         -- You can use a sub-list to tell conform to run *until* a formatter
         -- is found.
         -- javascript = { { "prettier" } },
+        cpp = { 'clang_format' },
         markdown = { 'prettier', stop_after_first = true },
       },
     },
@@ -979,58 +997,21 @@ require('lazy').setup({
 
 -- SET YOUR THEME HERE --
 -- vim.cmd.colorscheme 'catppuccin-macchiato'
-vim.cmd.colorscheme 'gruvbox'
+vim.cmd.colorscheme 'everforest'
 
 -- THEME TWEAKS --
 if vim.g.colors_name == 'kanagawa' then
   vim.cmd 'hi CursorLine guibg=#2a2a37'
 elseif vim.g.colors_name == 'sonokai' then
-  vim.cmd 'hi CursorLine guibg=#333648'
-  vim.cmd 'hi CursorLineNr guibg=#333648 guifg=#77d5f0'
-  vim.cmd 'hi BufferTabpageFill guibg=#393e53'
+  vim.cmd 'hi BufferTabpageFill guibg= guifg= '
 elseif vim.g.colors_name == 'gruvbox' then
   -- DO NOTHING
-else
+elseif vim.g.colors_name == 'catppuccin-macchiato' then
   vim.cmd 'hi IncSearch guifg=#414858 guibg=#e5c07b'
   vim.cmd 'hi CursorLine guibg=#24273a'
 end
 
 -- END THEME TWEAKS --
 
--- CURSOR STUFF
-
 -- Set cursor style without blinking in any mode
 vim.opt.guicursor = 'n-v-c-sm:block-Cursor,i-ci-ve:block-Cursor,r-cr-o:block-Cursor,n:block-Cursor'
--- vim.opt.guicursor:append 'n:blinkon0'
--- vim.opt.guicursor:append 'v:blinkon0'
--- vim.opt.guicursor:append 'c:blinkon0'
--- vim.opt.guicursor:append 'i:blinkon0'
--- vim.opt.guicursor:append 'r:blinkon0'
--- vim.opt.guicursor:append 'o:blinkon0'
--- local function set_cursor_color()
---   local mode = vim.api.nvim_get_mode().mode
---   local hl_group = 'MiniStatuslineModeNormal' -- Default to normal mode
---
---   if mode == 'i' then
---     hl_group = 'MiniStatuslineModeInsert'
---   elseif mode == 'v' or mode == 'V' or mode == '\22' then
---     hl_group = 'MiniStatuslineModeVisual'
---   elseif mode == 'R' then
---     hl_group = 'MiniStatuslineModeReplace'
---   end
---
---   -- Get the highlight definition for the current mode
---   local hl = vim.api.nvim_get_hl(0, { name = hl_group })
---
---   -- Set the cursor highlight to the current mode
---   vim.api.nvim_set_hl(0, 'Cursor', { fg = hl.fg, bg = hl.bg })
--- end
---
--- -- Create autocommands to trigger on mode changes
--- vim.api.nvim_create_autocmd({ 'ModeChanged', 'VimEnter' }, {
---   callback = set_cursor_color,
--- })
---
--- END CURSOR STUFF
-
--- The line beneath this is called `modvim: ts=2 sts=2 sw=2 et
