@@ -997,7 +997,7 @@ require('lazy').setup({
 
 -- SET YOUR THEME HERE --
 -- vim.cmd.colorscheme 'catppuccin-macchiato'
-vim.cmd.colorscheme 'everforest'
+vim.cmd.colorscheme 'ayu'
 
 -- THEME TWEAKS --
 if vim.g.colors_name == 'kanagawa' then
