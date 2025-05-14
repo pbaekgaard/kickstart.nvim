@@ -983,8 +983,8 @@ require('lazy').setup({
 })
 
 -- SET YOUR THEME HERE --
--- vim.cmd.colorscheme "ayu"
-vim.cmd.colorscheme 'ayu'
+-- vim.cmd.colorscheme "catppuccin-mocha"
+vim.cmd.colorscheme 'catppuccin-mocha'
 
 -- THEME TWEAKS --
 if vim.g.colors_name == 'kanagawa' then
@@ -994,6 +994,9 @@ elseif vim.g.colors_name == 'sonokai' then
 elseif vim.g.colors_name == 'gruvbox' then
   -- DO NOTHING
 elseif vim.g.colors_name == 'catppuccin-macchiato' then
+  vim.cmd 'hi IncSearch guifg=#414858 guibg=#e5c07b'
+  vim.cmd 'hi CursorLine guibg=#24273a'
+elseif vim.g.colors_name == 'catppuccin-mocha' then
   vim.cmd 'hi IncSearch guifg=#414858 guibg=#e5c07b'
   vim.cmd 'hi CursorLine guibg=#24273a'
 end
