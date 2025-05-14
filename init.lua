@@ -607,19 +607,6 @@ require('lazy').setup({
         rust_analyzer = {},
         dockerls = {},
         svelte = {},
-        hls = {
-          settings = {
-            haskell = {
-              plugin = {
-                ['ghcide-type-lenses'] = {
-                  config = {
-                    mode = 'always',
-                  },
-                },
-              },
-            },
-          },
-        },
 
         -- ... etc. See `:help lspconfig-all` for a list of all the pre-configured LSPs
         --
@@ -996,7 +983,7 @@ require('lazy').setup({
 })
 
 -- SET YOUR THEME HERE --
--- vim.cmd.colorscheme 'catppuccin-macchiato'
+-- vim.cmd.colorscheme "ayu"
 vim.cmd.colorscheme 'ayu'
 
 -- THEME TWEAKS --
