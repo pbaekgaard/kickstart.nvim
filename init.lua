@@ -58,6 +58,18 @@ vim.opt.showmode = false
 --  Remove this option if you want your OS clipboard to remain independent.
 --  See `:help 'clipboard'`
 vim.opt.clipboard = 'unnamedplus'
+vim.g.clipboard = {
+  name = 'win32yank-wsl',
+  copy = {
+    ['+'] = 'win32yank.exe -i --crlf',
+    ['*'] = 'win32yank.exe -i --crlf',
+  },
+  paste = {
+    ['+'] = 'win32yank.exe -o --lf',
+    ['*'] = 'win32yank.exe -o --lf',
+  },
+  cache_enabled = false,
+}
 
 -- Enable break indent
 vim.opt.breakindent = true
@@ -465,6 +477,9 @@ require('lazy').setup({
       --    That is to say, every time a new file is opened that is associated with
       --    an lsp (for example, opening `main.rs` is associated with `rust_analyzer`) this
       --    function will be executed to configure the current buffer
+      vim.diagnostic.config {
+        float = { border = 'rounded' },
+      }
       vim.api.nvim_create_autocmd('LspAttach', {
         group = vim.api.nvim_create_augroup('kickstart-lsp-attach', { clear = true }),
         callback = function(event)
@@ -755,13 +770,14 @@ require('lazy').setup({
       --  into multiple repos for maintenance purposes.
       'hrsh7th/cmp-nvim-lsp',
       'hrsh7th/cmp-path',
+      'jcha0713/cmp-tw2css',
+      'onsails/lspkind.nvim',
     },
     config = function()
       -- See `:help cmp`
       local cmp = require 'cmp'
       local luasnip = require 'luasnip'
       luasnip.config.setup {}
-
       cmp.setup {
         snippet = {
           expand = function(args)
@@ -769,6 +785,34 @@ require('lazy').setup({
           end,
         },
         completion = { completeopt = 'menuone,noselect' },
+        window = {
+          completion = {
+            winhighlight = 'Normal:CmpPmenu,CursorLine:Visual,Search:None',
+            col_offset = -3,
+            side_padding = 1,
+            scrollbar = false,
+            border = 'rounded',
+          },
+
+          documentation = {
+            winhighlight = 'Normal:CmpPmenu,CursorLine:Visual,Search:None',
+            col_offset = -3,
+            side_padding = 1,
+            scrollbar = false,
+            border = 'rounded',
+          },
+        },
+        formatting = {
+          fields = { 'kind', 'abbr', 'menu' },
+          format = function(entry, vim_item)
+            local kind = require('lspkind').cmp_format { mode = 'symbol_text', maxwidth = 50 }(entry, vim_item)
+            local strings = vim.split(kind.kind, '%s', { trimempty = true })
+            kind.kind = ' ' .. (strings[1] or '') .. ' '
+            kind.menu = '    (' .. (strings[2] or '') .. ')'
+
+            return kind
+          end,
+        },
 
         -- For an understanding of why these mappings were
         -- chosen, you will need to read `:help ins-completion`
@@ -831,6 +875,7 @@ require('lazy').setup({
         },
         sources = {
           { name = 'nvim_lsp' },
+          { name = 'cmp-tw2css' },
           { name = 'luasnip' },
           { name = 'path' },
         },
@@ -984,7 +1029,7 @@ require('lazy').setup({
 
 -- SET YOUR THEME HERE --
 -- vim.cmd.colorscheme "catppuccin-mocha"
-vim.cmd.colorscheme 'catppuccin-mocha'
+vim.cmd.colorscheme 'ayu'
 
 -- THEME TWEAKS --
 if vim.g.colors_name == 'kanagawa' then
