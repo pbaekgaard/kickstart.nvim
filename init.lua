@@ -461,10 +461,16 @@ require('lazy').setup({
       -- If you're wondering about lsp vs treesitter, you can check out the wonderfully
       -- and elegantly composed help section, `:help lsp-vs-treesitter`
 
+      -- Rounded diagnostics
+      vim.diagnostic.config {
+        float = { border = 'rounded' },
+      }
+
       --  This function gets run when an LSP attaches to a particular buffer.
       --    That is to say, every time a new file is opened that is associated with
       --    an lsp (for example, opening `main.rs` is associated with `rust_analyzer`) this
       --    function will be executed to configure the current buffer
+
       vim.api.nvim_create_autocmd('LspAttach', {
         group = vim.api.nvim_create_augroup('kickstart-lsp-attach', { clear = true }),
         callback = function(event)
@@ -755,6 +761,8 @@ require('lazy').setup({
       --  into multiple repos for maintenance purposes.
       'hrsh7th/cmp-nvim-lsp',
       'hrsh7th/cmp-path',
+      'jcha0713/cmp-tw2css',
+      'onsails/lspkind.nvim',
     },
     config = function()
       -- See `:help cmp`
@@ -769,6 +777,35 @@ require('lazy').setup({
           end,
         },
         completion = { completeopt = 'menuone,noselect' },
+
+        window = {
+          completion = {
+            winhighlight = 'Normal:CmpPmenu,CursorLine:Visual,Search:None',
+            col_offset = -3,
+            side_padding = 1,
+            scrollbar = false,
+            border = 'rounded',
+          },
+
+          documentation = {
+            winhighlight = 'Normal:CmpPmenu,CursorLine:Visual,Search:None',
+            col_offset = -3,
+            side_padding = 1,
+            scrollbar = false,
+            border = 'rounded',
+          },
+        },
+        formatting = {
+          fields = { 'kind', 'abbr', 'menu' },
+          format = function(entry, vim_item)
+            local kind = require('lspkind').cmp_format { mode = 'symbol_text', maxwidth = 50 }(entry, vim_item)
+            local strings = vim.split(kind.kind, '%s', { trimempty = true })
+            kind.kind = ' ' .. (strings[1] or '') .. ' '
+            kind.menu = '    (' .. (strings[2] or '') .. ')'
+
+            return kind
+          end,
+        },
 
         -- For an understanding of why these mappings were
         -- chosen, you will need to read `:help ins-completion`
@@ -833,6 +870,7 @@ require('lazy').setup({
           { name = 'nvim_lsp' },
           { name = 'luasnip' },
           { name = 'path' },
+          { name = 'cmp-tw2css' },
         },
       }
     end,
