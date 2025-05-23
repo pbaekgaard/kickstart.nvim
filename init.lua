@@ -6,6 +6,8 @@ vim.g.maplocalleader = ' '
 -- Set to true if you have a Nerd Font installed and selected in the terminal
 vim.g.have_nerd_font = true
 
+vim.loader.enable()
+
 -- [[ Setting options ]]
 -- See `:help vim.opt`
 -- NOTE: You can change these options as you wish!
@@ -1022,7 +1024,7 @@ require('lazy').setup({
 
 -- SET YOUR THEME HERE --
 -- vim.cmd.colorscheme "catppuccin-mocha"
-vim.cmd.colorscheme 'catppuccin-mocha'
+vim.cmd.colorscheme "catppuccin-mocha"
 
 -- THEME TWEAKS --
 if vim.g.colors_name == 'kanagawa' then
