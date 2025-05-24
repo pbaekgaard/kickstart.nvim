@@ -9,7 +9,7 @@ return {
     -- refer to the configuration section below
     animate = { enabled = true },
     bigfile = { enabled = true },
-    -- dashboard = { enabled = true },
+    dashboard = { enabled = true },
     indent = { enabled = true },
     input = { enabled = true },
     notifier = { enabled = true },
@@ -17,5 +17,14 @@ return {
     -- scroll = { enabled = true },
     -- statuscolumn = { enabled = true },
     words = { enabled = true },
+  },
+  keys = {
+    {
+      '<leader>n',
+      function()
+        Snacks.notifier.show_history()
+      end,
+      desc = 'Notification History',
+    },
   },
 }

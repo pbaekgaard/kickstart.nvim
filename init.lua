@@ -109,7 +109,7 @@ vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
 
 -- Git
 --- LazyGit
-vim.keymap.set('n', '<leader>gl', '<cmd>LazyGit<CR>', { desc = 'LazyGit' })
+-- vim.keymap.set('n', '<leader>gl', '<cmd>LazyGit<CR>', { desc = 'LazyGit' })
 
 --- Git Conflicts
 vim.keymap.set('n', '<leader>gco', '<cmd>GitConflictChooseOurs<CR>', { desc = '[G]it [C]onflict Choose [O]urs' })
@@ -171,14 +171,6 @@ vim.api.nvim_create_autocmd('TextYankPost', {
 vim.opt.shiftwidth = 4
 vim.opt.smarttab = true
 
--- Create an autocommand group for setting shiftwidth=2 and conceallevel=3 for .norg files
-vim.api.nvim_create_autocmd('FileType', {
-  pattern = 'norg',
-  callback = function()
-    vim.opt.conceallevel = 3
-  end,
-})
-
 vim.api.nvim_create_autocmd('FileType', {
   pattern = 'markdown',
   callback = function()
@@ -209,7 +201,7 @@ vim.opt.rtp:prepend(lazypath)
 require('lazy').setup({
   -- NOTE: Plugins can be added with a link (or for a github repo: 'owner/repo' link).
   'tpope/vim-sleuth', -- Detect tabstop and shiftwidth automatically
-  'kdheepak/lazygit.nvim',
+  -- 'kdheepak/lazygit.nvim',
 
   -- NOTE: Plugins can also be added by using a table,
   -- with the first argument being the link and the following
@@ -987,9 +979,8 @@ require('lazy').setup({
   --  Here are some example plugins that I've included in the Kickstart repository.
   --  Uncomment any of the lines below to enable them (you will need to restart nvim).
   --
-  require 'kickstart.plugins.debug',
-  require 'kickstart.plugins.indent_line',
-  require 'kickstart.plugins.lint',
+  -- require 'kickstart.plugins.debug',
+  -- require 'kickstart.plugins.lint',
   require 'kickstart.plugins.autopairs',
   require 'kickstart.plugins.gitsigns', -- adds gitsigns recommend keymaps
 
@@ -1024,7 +1015,7 @@ require('lazy').setup({
 
 -- SET YOUR THEME HERE --
 -- vim.cmd.colorscheme "catppuccin-mocha"
-vim.cmd.colorscheme "catppuccin-mocha"
+vim.cmd.colorscheme 'catppuccin-mocha'
 
 -- THEME TWEAKS --
 if vim.g.colors_name == 'kanagawa' then
