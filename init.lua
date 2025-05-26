@@ -381,6 +381,7 @@ require('lazy').setup({
       -- See `:help telescope.builtin`
       local builtin = require 'telescope.builtin'
       vim.keymap.set('n', '<leader>sh', builtin.help_tags, { desc = '[S]earch [H]elp' })
+      vim.keymap.set('n', '<leader>sb', builtin.buffers, { desc = '[S]earch [B]uffers' })
       vim.keymap.set('n', '<leader>sc', builtin.colorscheme, { desc = '[S]earch [C]olorschemes' })
       vim.keymap.set('n', '<leader>sk', builtin.keymaps, { desc = '[S]earch [K]eymaps' })
       vim.keymap.set('n', '<leader>sf', builtin.find_files, { desc = '[S]earch [F]iles' })
@@ -1023,8 +1024,8 @@ require('lazy').setup({
 })
 
 -- SET YOUR THEME HERE --
--- vim.cmd.colorscheme "catppuccin-mocha"
-vim.cmd.colorscheme "catppuccin-mocha"
+-- vim.cmd.colorscheme "onedark"
+vim.cmd.colorscheme "onedark"
 
 -- THEME TWEAKS --
 if vim.g.colors_name == 'kanagawa' then
@@ -1039,6 +1040,18 @@ elseif vim.g.colors_name == 'catppuccin-macchiato' then
 elseif vim.g.colors_name == 'catppuccin-mocha' then
   vim.cmd 'hi IncSearch guifg=#414858 guibg=#e5c07b'
   vim.cmd 'hi CursorLine guibg=#24273a'
+elseif vim.g.colors_name == 'everforest' then
+  vim.cmd 'hi BufferTabpageFill guibg= guifg= '
+  vim.cmd 'hi TabLine guibg= guifg= '
+  vim.cmd 'hi TabLineFill guibg= guifg= '
+  vim.cmd 'hi TabLineSel guibg= guifg= '
+  vim.cmd 'hi BufferTabpageFill guibg= guifg= '
+  vim.cmd 'hi CursorLine guibg= guifg'
+  vim.cmd 'hi CursorLineNr guibg= guifg'
+elseif vim.g.colors_name == 'onedark_vivid' then
+  vim.cmd 'hi Cursor guibg=#DD566B'
+elseif vim.g.colors_name == 'onedark' then
+  vim.cmd 'hi Cursor guibg=#CE666F'
 end
 
 -- END THEME TWEAKS --
