@@ -980,7 +980,7 @@ require('lazy').setup({
   --  Here are some example plugins that I've included in the Kickstart repository.
   --  Uncomment any of the lines below to enable them (you will need to restart nvim).
   --
-  -- require 'kickstart.plugins.debug',
+  require 'kickstart.plugins.debug',
   -- require 'kickstart.plugins.lint',
   require 'kickstart.plugins.autopairs',
   require 'kickstart.plugins.gitsigns', -- adds gitsigns recommend keymaps
@@ -1015,8 +1015,7 @@ require('lazy').setup({
 })
 
 -- SET YOUR THEME HERE --
--- vim.cmd.colorscheme "onedark"
-vim.cmd.colorscheme "onedark"
+vim.cmd.colorscheme 'rose-pine'
 
 -- THEME TWEAKS --
 if vim.g.colors_name == 'kanagawa' then

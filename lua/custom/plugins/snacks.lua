@@ -9,7 +9,7 @@ return {
     -- refer to the configuration section below
     animate = { enabled = true },
     bigfile = { enabled = true },
-    dashboard = { enabled = true },
+    dashboard = { enabled = false },
     indent = { enabled = true },
     input = { enabled = true },
     notifier = { enabled = true },
