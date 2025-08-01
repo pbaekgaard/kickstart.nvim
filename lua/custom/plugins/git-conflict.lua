@@ -3,7 +3,6 @@ vim.cmd "highlight DiffText guibg = '#314753'"
 return {
   'akinsho/git-conflict.nvim',
   version = '*',
-  lazy = true,
   opts = {
     default_mappings = false,
     disable_diagnostics = true,

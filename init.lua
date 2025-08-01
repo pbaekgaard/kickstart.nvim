@@ -13,7 +13,6 @@ vim.g.have_nerd_font = true
 
 -- FOLDING LEVELS
 vim.opt.foldlevel = 99
-
 --Rename
 vim.api.nvim_set_keymap('n', '<leader>rn', '<cmd>lua require("renamer").rename()<cr>', { noremap = true, silent = true })
 
@@ -29,6 +28,19 @@ vim.keymap.set('n', '<leader>tv', '<Cmd>ToggleTerm direction=vertical<CR>', { de
 -- switch buffers
 vim.keymap.set('n', '<C-h>', '<Cmd>bprev<CR>', { desc = 'Buffer Left' })
 vim.keymap.set('n', '<C-l>', '<Cmd>bnext<CR>', { desc = 'Buffer Right' })
+
+-- Markdown Toggle
+-- vim.api.nvim_create_autocmd('FileType', {
+--   desc = 'markdown-toggle.nvim keymaps',
+--   pattern = { 'markdown', 'markdown.mdx' },
+--   callback = function(args)
+--     local opts = { silent = true, noremap = true, buffer = args.buf }
+--     local toggle = require 'markdown-toggle'
+--
+--     vim.keymap.set('v', '<C-t>', toggle.checkbox, opts)
+--     vim.keymap.set('n', '<C-t>', toggle.checkbox, opts)
+--   end,
+-- })
 
 -- Paste image
 vim.keymap.set('n', '<leader>i', '<Cmd>Pastify<CR>', { desc = 'Paste [I]mage' })
@@ -112,6 +124,7 @@ vim.keymap.set('n', '<leader>gct', '<cmd>GitConflictChooseTheirs<CR>', { desc = 
 vim.keymap.set('n', '<leader>gcn', '<cmd>GitConflictNextConflict<CR>', { desc = '[G]it [C]onflict [N]ext' })
 vim.keymap.set('n', '<leader>gcp', '<cmd>GitConflictPrevConflict<CR>', { desc = '[G]it [C]onflict [P]revious' })
 vim.keymap.set('n', '<leader>gcl', '<cmd>GitConflictListQf<CR>', { desc = '[G]it [C]onflict [L]ist' })
+vim.keymap.set('n', '<leader>gcr', '<cmd>GitConflictRefresh<CR>', { desc = '[G]it [C]onflict [R]efresh' })
 
 -- Zen Mode
 vim.keymap.set('n', '<leader>z', '<cmd>ZenMode<CR>', { desc = 'Enables Zenmode' })
@@ -282,6 +295,9 @@ require('lazy').setup({
         { '<leader>h', group = '[H]arpoon' },
         { '<leader>l', group = '[L]azyGit' },
         { '<leader>z', group = '[Z]en mode' },
+        { '<leader>m', group = '[M]arkdown' },
+        { '<leader>o', group = '[O]verseer' },
+        { '<leader>mi', group = '[I]nsert' },
       }
       -- visual mode
       require('which-key').add {
@@ -681,7 +697,7 @@ require('lazy').setup({
         -- Disable "format_on_save lsp_fallback" for languages that don't
         -- have a well standardized coding style. You can add additional
         -- languages here or re-enable it for the disabled ones.
-        local disable_filetypes = { c = true, cpp = true, haskell = true }
+        local disable_filetypes = { c = false, cpp = true, haskell = true }
         return {
           timeout_ms = 500,
           lsp_fallback = not disable_filetypes[vim.bo[bufnr].filetype],
@@ -691,18 +707,23 @@ require('lazy').setup({
         prettier = {
           prepend_args = { '--config', '/home/pbk/.config/nvim/utils/prettier-config/.prettierrc.json' },
         },
+        clang_format = {
+          prepend_args = { '--style=Microsoft' },
+        },
       },
       formatters_by_ft = {
         xml = { 'xmlformatter' },
         lua = { 'stylua' },
         -- Conform can also run multiple formatters sequentially
+        cpp = { 'clang_format' },
         python = { 'autoflake', 'isort', 'black' },
         json = { 'prettier', 'jq' },
+        go = { 'gofmt' },
         --
         -- You can use a sub-list to tell conform to run *until* a formatter
         -- is found.
         -- javascript = { { "prettier" } },
-        markdown = { 'prettierd', stop_after_first = true },
+        markdown = { 'prettier' },
       },
     },
   },
@@ -976,59 +997,44 @@ require('lazy').setup({
 })
 
 -- SET YOUR THEME HERE --
--- vim.cmd.colorscheme 'catppuccin-macchiato'
-vim.cmd.colorscheme 'gruvbox'
+vim.cmd.colorscheme 'rose-pine'
 
 -- THEME TWEAKS --
 if vim.g.colors_name == 'kanagawa' then
   vim.cmd 'hi CursorLine guibg=#2a2a37'
 elseif vim.g.colors_name == 'sonokai' then
-  vim.cmd 'hi CursorLine guibg=#333648'
-  vim.cmd 'hi CursorLineNr guibg=#333648 guifg=#77d5f0'
-  vim.cmd 'hi BufferTabpageFill guibg=#393e53'
+  vim.cmd 'hi BufferTabpageFill guibg= guifg= '
+elseif vim.g.colors_name == 'horizon' then
+  vim.cmd 'hi Comment cterm=NONE gui=NONE guifg=#4c4d53'
 elseif vim.g.colors_name == 'gruvbox' then
   -- DO NOTHING
-else
+elseif vim.g.colors_name == 'catppuccin-macchiato' then
   vim.cmd 'hi IncSearch guifg=#414858 guibg=#e5c07b'
   vim.cmd 'hi CursorLine guibg=#24273a'
+elseif vim.g.colors_name == 'catppuccin-mocha' then
+  vim.cmd 'hi IncSearch guifg=#414858 guibg=#e5c07b'
+  vim.cmd 'hi CursorLine guibg=#24273a'
+elseif vim.g.colors_name == 'everforest' then
+  vim.cmd 'hi BufferTabpageFill guibg= guifg= '
+  vim.cmd 'hi TabLine guibg= guifg= '
+  vim.cmd 'hi TabLineFill guibg= guifg= '
+  vim.cmd 'hi TabLineSel guibg= guifg= '
+  vim.cmd 'hi BufferTabpageFill guibg= guifg= '
+  vim.cmd 'hi CursorLine guibg= guifg'
+  vim.cmd 'hi CursorLineNr guibg= guifg'
+elseif vim.g.colors_name and string.find(vim.g.colors_name, 'onedark') then
+  if vim.g.colors_name == 'onedark_vivid' then
+    vim.cmd 'hi Cursor guibg=#DD566B'
+  elseif vim.g.colors_name == 'onedark' then
+    vim.cmd 'hi Cursor guibg=#CE666F'
+  end
+
+  -- Shared highlight rules for all onedark variants
+  vim.cmd 'hi RenderMarkdownChecked ctermfg=142 guifg=#98c379 guibg=NONE'
+  vim.cmd 'hi @markup.list.checked ctermfg=142 guifg=#98c379 guibg=NONE'
+  vim.cmd 'hi RenderMarkdownTodo guibg=NONE guifg=#c678dd'
+  vim.cmd 'hi @markup.link.label guibg=NONE guifg=#c678dd'
+  vim.cmd 'hi Underlined guibg=NONE guifg=#c678dd'
 end
 
--- END THEME TWEAKS --
-
--- CURSOR STUFF
-
--- Set cursor style without blinking in any mode
 vim.opt.guicursor = 'n-v-c-sm:block-Cursor,i-ci-ve:block-Cursor,r-cr-o:block-Cursor,n:block-Cursor'
--- vim.opt.guicursor:append 'n:blinkon0'
--- vim.opt.guicursor:append 'v:blinkon0'
--- vim.opt.guicursor:append 'c:blinkon0'
--- vim.opt.guicursor:append 'i:blinkon0'
--- vim.opt.guicursor:append 'r:blinkon0'
--- vim.opt.guicursor:append 'o:blinkon0'
--- local function set_cursor_color()
---   local mode = vim.api.nvim_get_mode().mode
---   local hl_group = 'MiniStatuslineModeNormal' -- Default to normal mode
---
---   if mode == 'i' then
---     hl_group = 'MiniStatuslineModeInsert'
---   elseif mode == 'v' or mode == 'V' or mode == '\22' then
---     hl_group = 'MiniStatuslineModeVisual'
---   elseif mode == 'R' then
---     hl_group = 'MiniStatuslineModeReplace'
---   end
---
---   -- Get the highlight definition for the current mode
---   local hl = vim.api.nvim_get_hl(0, { name = hl_group })
---
---   -- Set the cursor highlight to the current mode
---   vim.api.nvim_set_hl(0, 'Cursor', { fg = hl.fg, bg = hl.bg })
--- end
---
--- -- Create autocommands to trigger on mode changes
--- vim.api.nvim_create_autocmd({ 'ModeChanged', 'VimEnter' }, {
---   callback = set_cursor_color,
--- })
---
--- END CURSOR STUFF
-
--- The line beneath this is called `modvim: ts=2 sts=2 sw=2 et
