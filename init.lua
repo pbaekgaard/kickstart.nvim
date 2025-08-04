@@ -1,5 +1,6 @@
 vim.o.number = true
 vim.o.relativenumber = true
+vim.opt.clipboard = 'unnamedplus'
 vim.o.signcolumn = "yes"
 vim.o.termguicolors = true
 vim.o.wrap = false
@@ -7,7 +8,6 @@ vim.o.tabstop = 4
 vim.o.swapfile = false
 vim.g.mapleader = " "
 vim.o.winborder = "rounded"
-vim.o.clipboard = "unnamedplus"
 
 vim.keymap.set('n', '<leader>o', ':update<CR> :source<CR>')
 vim.keymap.set('n', '<leader>w', ':write<CR>')
@@ -19,11 +19,18 @@ vim.keymap.set({ 'n', 'v', 'x' }, '<leader>d', '"+d<CR>')
 vim.pack.add({
 	{ src = "https://github.com/vague2k/vague.nvim" },
 	{ src = "https://github.com/stevearc/oil.nvim" },
-	{ src = "https://github.com/rose-pine/neovim", as="rosepine"},
+	{ src = "https://github.com/rose-pine/neovim", name="rosepine"},
 	{ src = "https://github.com/echasnovski/mini.pick" },
 	{ src = "https://github.com/nvim-treesitter/nvim-treesitter" },
 	{ src = "https://github.com/neovim/nvim-lspconfig" },
-	{ src = "https://github.com/chomosuke/typst-preview.nvim" },
+})
+
+vim.cmd("set completeopt+=noselect")
+
+require "mini.pick".setup()
+require "nvim-treesitter.configs".setup({
+	ensure_installed = { "svelte", "typescript", "javascript" },
+	highlight = { enable = true }
 })
 
 vim.api.nvim_create_autocmd('LspAttach', {
@@ -34,14 +41,6 @@ vim.api.nvim_create_autocmd('LspAttach', {
 		end
 	end,
 })
-vim.cmd("set completeopt+=noselect")
-
-require "mini.pick".setup()
-require "nvim-treesitter.configs".setup({
-	ensure_installed = { "svelte", "typescript", "javascript" },
-	highlight = { enable = true }
-})
-require "oil".setup()
 
 vim.keymap.set('n', '<leader>f', ":Pick files<CR>")
 vim.keymap.set('n', '<leader>h', ":Pick help<CR>")
@@ -97,9 +96,6 @@ styles = {
       oil = require 'oil'
       oil.open_float()
     end, { desc = '[E]xplore Files' })
-
-
-
 
 vim.cmd("colorscheme rose-pine")
 vim.cmd(":hi statusline guibg=NONE")
