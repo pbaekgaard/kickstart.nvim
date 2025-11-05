@@ -3,7 +3,7 @@ return {
     "goolord/alpha-nvim",
     dependencies = {
       "nvim-tree/nvim-web-devicons",
-      "echasnovski/mini.icons",
+      "nvim-mini/mini.icons",
     },
     config = function()
       require("config.alpha")
