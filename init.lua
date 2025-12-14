@@ -3,6 +3,5 @@ require("config.lazy")
 
 -- Rounded borders
 vim.o.winborder = "rounded"
-
 -- block cursor in insertmode
 vim.opt.guicursor = ""
