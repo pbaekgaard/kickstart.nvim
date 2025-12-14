@@ -1,5 +1,6 @@
 return {
-  "lukas-reineke/virt-column.nvim",
+  "IronGeek/virt-column.nvim",
+  branch = "fix/off-by-one",
   config = function(_, opts)
     -- Function to blend colors with alpha
     local function alpha(hl_group, alpha_value)
@@ -83,9 +84,14 @@ return {
     require("virt-column").setup(opts)
   end,
   opts = {
-    virtcolumn = "80",
+    virtcolumn = "+1,80",
     highlight = "VirtColumnColor",
     char = "│",
-    exclude = { filetypes = { "oil" } },
+    virt_lines = true, -- Enable virt_lines to show on last line
+    exclude = {
+      filetypes = {
+        "oil"
+      }
+    },
   },
 }
