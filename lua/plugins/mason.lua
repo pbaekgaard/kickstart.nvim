@@ -1,8 +1,9 @@
 return {
-  "mason-org/mason.nvim",
-  opts = {
-    ui = {
-      border = "rounded",
+  -- 1. mason.nvim
+  {
+    "mason/mason.nvim",
+    opts = {
+      ui = { border = "rounded" },
     },
   },
 }
