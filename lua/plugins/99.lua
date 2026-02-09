@@ -10,7 +10,11 @@ return {
     local cwd = vim.uv.cwd()
     local basename = vim.fs.basename(cwd)
     _99.setup({
-      model = "opencode/kimi-k2.5-free",
+      model = "google/antigravity-claude-sonnet-4-5",
+      -- model = "google/antigravity-claude-sonnet-4-5",
+      -- model = "google/antigravity-claude-sonnet-4-5-thinking",
+      -- model = "google/antigravity-gemini-3-flash",
+      -- model = "google/antigravity-gemini-3-pro",
       logger = {
         level = _99.DEBUG,
         path = "/tmp/" .. basename .. ".99.debug",
@@ -44,7 +48,7 @@ return {
 
         --- What autocomplete do you use.  We currently only
         --- support cmp right now
-        source = 'cmp',
+        source = nil,
       },
 
       --- WARNING: if you change cwd then this is likely broken
@@ -62,15 +66,17 @@ return {
     })
 
     -- Create your own short cuts for the different types of actions
-    vim.keymap.set("n", "<leader>9f", function()
-      _99.fill_in_function()
-    end, { desc = "[f]ill function" })
+    vim.keymap.set("v", "<leader>9v", function()
+      _99.visual()
+    end, { desc = "[9]9 [V]isual Prompt" })
 
-    vim.keymap.set("v", "<leader>9v", function() _99.visual_prompt({}) end, { desc = "[v]isual prompt" })
+    vim.keymap.set({"n", "v"}, "<leader>9s", function()
+      _99.search()
+    end, { desc = "[9]9 [S]earch" })
 
     --- if you have a request you dont want to make any changes, just cancel it
-    vim.keymap.set({"n", "v", "i"}, "<leader>9s", function()
+    vim.keymap.set({ "n", "v", "i" }, "<leader>9c", function()
       _99.stop_all_requests()
-    end, { desc = "[s]top all requests" })
+    end, { desc = "[9]9 [C]ancel all requests" })
   end,
 }

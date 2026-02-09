@@ -75,7 +75,7 @@ return {
     end
 
     -- Create VirtColumnColor highlight group
-    local virt_column_color = alpha("Identifier", 50) -- 50% blend
+    local virt_column_color = alpha("Macro", 85) -- 50% blend
     vim.api.nvim_set_hl(0, "VirtColumnColor", {
       fg = virt_column_color,
     })
@@ -84,7 +84,7 @@ return {
     require("virt-column").setup(opts)
   end,
   opts = {
-    virtcolumn = "+1,80",
+    virtcolumn = "80",
     highlight = "VirtColumnColor",
     char = "│",
     virt_lines = true, -- Enable virt_lines to show on last line
