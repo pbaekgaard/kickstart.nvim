@@ -12,12 +12,18 @@ return { -- Autoformat
     },
   },
   opts = {
+    formatters = {
+      prettier = {
+        prepend_args = { '--config', '/home/pbk/.config/nvim/formatter_configs/prettier/.prettierrc.json' },
+      },
+    },
     notify_on_error = true,
     format_on_save = false,
     formatters_by_ft = {
       -- Conform can also run multiple formatters sequentially
       tex = { "tex-fmt" },
       markdown = { "prettier", stop_after_first = true },
+      python = { "black", stop_after_first = true },
     },
   },
 }
