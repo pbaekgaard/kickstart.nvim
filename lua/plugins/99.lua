@@ -75,7 +75,7 @@ return {
     end, { desc = "[9]9 [S]earch" })
 
     --- if you have a request you dont want to make any changes, just cancel it
-    vim.keymap.set({ "n", "v", "i" }, "<leader>9c", function()
+    vim.keymap.set({ "n", "v" }, "<leader>9c", function()
       _99.stop_all_requests()
     end, { desc = "[9]9 [C]ancel all requests" })
   end,
