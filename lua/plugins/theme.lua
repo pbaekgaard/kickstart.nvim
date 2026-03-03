@@ -1,1 +1,1 @@
-/home/pbk/.config/omarchy/current/theme/neovim.lua
+/home/pbd/.local/state/omarchy/current/theme/neovim.lua

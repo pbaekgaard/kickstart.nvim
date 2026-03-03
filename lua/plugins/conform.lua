@@ -24,6 +24,8 @@ return { -- Autoformat
       tex = { "tex-fmt" },
       markdown = { "prettier", stop_after_first = true },
       python = { "black", stop_after_first = true },
+      typst = { "typstyle", stop_after_first = true },
+      yaml = { "yamlfmt", stop_after_first = true },
     },
   },
 }

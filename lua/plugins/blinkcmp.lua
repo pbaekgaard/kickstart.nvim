@@ -1,5 +1,8 @@
 return {
   "saghen/blink.cmp",
+  dependencies = {
+    "saghen/blink.compat"
+  },
   opts = {
     completion = {
       menu = {

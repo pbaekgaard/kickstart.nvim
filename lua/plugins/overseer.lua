@@ -1,5 +1,6 @@
 return {
   "stevearc/overseer.nvim",
+  lazy = false,
   opts = {
     task_list = {
       direction = "bottom",
